@@ -1,0 +1,30 @@
+{
+  "name": "Learning_Fastify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm server",
+    "dev" : "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohanranjan25061996/Learning_Fastify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohanranjan25061996/Learning_Fastify/issues"
+  },
+  "homepage": "https://github.com/rohanranjan25061996/Learning_Fastify#readme",
+  "dependencies": {
+    "fastify": "^3.19.2",
+    "fastify-swagger": "^4.8.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
