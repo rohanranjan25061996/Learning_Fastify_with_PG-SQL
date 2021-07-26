@@ -1,15 +1,23 @@
 let items = require('../items')
 const { v4: uuidv4 } = require('uuid')
 
+
+
+
 const getItems = (req, res) => {
 
     res.send(items)
 }
 
-const getItem = (req, res) =>{
+const getItem = async (req, res, fastify) =>{
+   try {
     const {id} = req.params
-    const item = items.find(item => item.id === id)
-    res.send( item )
+    const data = await fastify.db.one('SELECT * FROM items WHERE active = $1', [id])
+    res.send( data )
+
+   }catch(err){
+       return err
+   }
 }
 
 const addItem = (req, res) =>{

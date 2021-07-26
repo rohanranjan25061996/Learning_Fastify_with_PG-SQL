@@ -7,6 +7,10 @@ const {
     updateItem
 } = require('../Controller/item')
 
+
+// DB Instance
+let db = null
+
 // Item Schema
 const Item = {
 
@@ -41,8 +45,7 @@ const getItemOpts = {
             200: Item
         }
     },
-
-    handler: getItem,
+    // handler: getItem,
 }
 
 const postItemOpts = {
@@ -89,11 +92,23 @@ const updateItemOpts = {
 
 function itemRoutes(fastify, options, done) {
 
+    db = fastify.db
+
     // Get all items
     fastify.get('/items', getItemsOpts)
     
     // Get single item
-    fastify.get('/items/:id', getItemOpts)
+    fastify.get('/items/:id', getItemOpts, async (req, res) => {
+        try {
+            const {id} = req.params
+            const data = await fastify.db.one('SELECT * FROM items WHERE id = $1', [id])
+            console.log("DATA is => ", data)
+            res.send( data )
+        
+           }catch(err){
+               return err
+           }
+    })
 
     // Add item
     fastify.post('/items', postItemOpts)
