@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity({name: "student"})
+@Entity()
 export class Student {
 
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn()
     id: string;
 
     @Column()
@@ -12,7 +12,5 @@ export class Student {
     @Column()
     roll_number: number;
 
-    @Column("date")
-    date: Date;
 
 }

@@ -1,14 +1,16 @@
 import {Student} from "../entity/student"
 import { Items } from "../entity/item"
 import { createConnection } from "typeorm"
+import {postgresURI} from "../config/ORMConfig"
 
 async function Database (fastify, options, next) {
-    const conn = createConnection({
+    await createConnection({
         type: "postgres",
-        url: "postgres://pjduwckr:ubKjh9EuNsWbMXNRBq47Ok2wCz5THZgm@kashin.db.elephantsql.com/pjduwckr",
-        entities: [Items],
+        url: postgresURI,
+        entities: [Items, Student],
         name: "mine"
     })
+    console.log("ORM Database Connected")
     next()
 }
 
