@@ -2,11 +2,10 @@
   "name": "Learning_Fastify",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm server",
-    "dev": "nodemon server"
+    "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' server.ts"
   },
   "repository": {
     "type": "git",
@@ -27,9 +26,11 @@
     "fastify-swagger": "^4.8.3",
     "pg": "^8.6.0",
     "pg-promise": "^10.10.2",
+    "typeorm": "^0.2.34",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/node": "^16.4.3",
     "nodemon": "^2.0.12"
   }
 }

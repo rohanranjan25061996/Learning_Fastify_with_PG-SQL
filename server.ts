@@ -1,6 +1,8 @@
+import {Database} from "./Database/ORMdb"
+
 const fastify = require('fastify') ({ logger: true }) // logger show some extra information in console
 
-const PORT = 5000
+const PORT = 8002
 
 fastify.register( require('fastify-swagger'), {
     exposeRoute: true,
@@ -10,8 +12,11 @@ fastify.register( require('fastify-swagger'), {
     }
 }  )
 
-fastify.register( require("./Database/db") )
-fastify.register( require("./Routes/items") )
+fastify.register( Database )
+// fastify.register( require("./Database/db") )
+// fastify.register( require("./Routes/items") )
+// fastify.register( require("./Routes/student") )
+fastify.register( require("./Routes/item1"))
 
 const start = async () => {
 

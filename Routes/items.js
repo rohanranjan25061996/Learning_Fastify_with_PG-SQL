@@ -8,9 +8,6 @@ const {
 } = require('../Controller/item')
 
 
-// DB Instance
-let db = null
-
 // Item Schema
 const Item = {
 
@@ -35,7 +32,7 @@ const getItemsOpts = {
         }
     },
 
-    handler: getItems,
+    // handler: getItems,
 }
 
 
@@ -62,7 +59,7 @@ const postItemOpts = {
         }
     },
 
-    handler: addItem,
+    // handler: addItem,
 }
 
 const deleteItemOpts = {
@@ -77,7 +74,7 @@ const deleteItemOpts = {
         }
     },
 
-    handler: deleteItem,
+    // handler: deleteItem,
 }
 
 const updateItemOpts = {
@@ -87,22 +84,27 @@ const updateItemOpts = {
         }
     },
 
-    handler: updateItem,
+    // handler: updateItem,
 }
 
 function itemRoutes(fastify, options, done) {
 
-    db = fastify.db
-
     // Get all items
-    fastify.get('/items', getItemsOpts)
+    fastify.get('/items', getItemsOpts, async (req, res) => {
+       try {
+        const data = await fastify.db.query('SELECT * FROM  items', [true]);
+        res.send(data)
+
+       }catch(err) {
+           return err
+       }
+    })
     
     // Get single item
     fastify.get('/items/:id', getItemOpts, async (req, res) => {
         try {
             const {id} = req.params
             const data = await fastify.db.one('SELECT * FROM items WHERE id = $1', [id])
-            console.log("DATA is => ", data)
             res.send( data )
         
            }catch(err){
@@ -111,13 +113,40 @@ function itemRoutes(fastify, options, done) {
     })
 
     // Add item
-    fastify.post('/items', postItemOpts)
+    fastify.post('/items', postItemOpts, async (req, res) => {
+
+        try{
+            const {name} = req.body
+            const data = await fastify.db.one('INSERT INTO items(name) VALUES($1) RETURNING id, name', [name])
+            res.send( data )
+
+        }catch(err){
+            return err
+        }
+
+    })
 
     // Delete item
-    fastify.delete("/items/:id", deleteItemOpts)
+    fastify.delete("/items/:id", deleteItemOpts, async (req, res) => {
+
+        try{
+
+        }catch(err){
+
+        }
+
+    })
 
     // Update item
-    fastify.put('/items/:id', updateItemOpts)
+    fastify.put('/items/:id', updateItemOpts ,async (req, res) => {
+
+        try{
+
+        }catch(err){
+
+        }
+
+    })
 
     done()
 }
